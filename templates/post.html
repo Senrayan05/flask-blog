@@ -1,0 +1,47 @@
+
+{% extends "layout.html" %}
+
+{% block body %}
+  {% set fname = 'img/' + post.img_file %} 
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('{{url_for('static', filename=fname)}}')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>{{post.subtitle}}</h1>
+            <span class="meta">Posted by <a href="#">BLog</a> on {{post.date}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>Content: {{ post.content|safe }}</p>
+          <p>Content Length: {{ post.content|length }}</p>
+          
+         <!-- Displaying the image on the login page -->
+         {% if post %}
+         <img class="mb-4" src="{{ url_for('static', filename='uploads/'+ post.img_file) }}" alt="Post Image">
+     {% endif %}
+            
+
+          {% block scripts %}
+            <script>
+              console.log("Content Length: {{ post.content|length }}");
+            </script>
+          {% endblock %}
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- Additional content for this template goes here -->
+
+{% endblock %}

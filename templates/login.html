@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+    <title>Admin Login Page</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+
+    <!-- Your custom CSS -->
+    <link href="{{ url_for('static', filename='css/signin.css') }}" rel="stylesheet">
+</head>
+
+<body class="text-center">
+    <form class="form-signin" action="/login" method="post" enctype="multipart/form-data">
+        <!-- Displaying the image on the login page -->
+        {% set fname = 'img/' + (params.get('horse.jpg') or 'default-img.jpg') %}
+        {# <img class="mb-4" src="{{ url_for('static', filename='uploads/'+ post.img_file) }}" alt="Post Image"> #}
+
+        <img class="mb-4" src="{{ url_for('static', filename='img/default-img.jpg') }}" alt="Login Image">
+
+
+
+        <h1 class="h3 mb-3 font-weight-normal text-align-center">Admin Login</h1>
+        <label for="uname" class="sr-only">User Name</label>
+        <input type="text" id="uname" name="uname" class="form-control" placeholder="User Name" required autofocus>
+        <label for="pass" class="sr-only">Password</label>
+        <input type="password" id="pass" name="pass" class="form-control" placeholder="Password" required>
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" value="remember-me"> Remember me
+            </label>
+        </div>
+
+        {% if 'user' in session and session['user'] == params['admin_user'] %}
+            <!-- Display the create new post section only if the user is logged in as admin -->
+            <div>
+                <h1>Create a New Post</h1>
+                <form action="{{ url_for('uploader') }}" method="post" enctype="multipart/form-data">
+
+                    <!-- Your form fields go here -->
+                    <label for="title">Title:</label>
+                    <input type="text" name="title" required>
+
+                    <label for="Slug">Slug:</label>
+                    <input type="text" name="Slug" required>
+
+                    <label for="subt">Subtitle:</label>
+                    <input type="text" name="subt" required>
+
+                    <label for="content">Content:</label>
+                    <textarea name="Content" required></textarea>
+
+                    <label for="file1">Image:</label>
+                    <input type="file" name="file1" accept="image/*">
+
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        {% endif %}
+        
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <hr>
+        <a href="/"><button class="btn btn-lg btn-primary btn-block" type="button">BACK TO HOME PAGE</button></a>
+    </form>
+
+    <p class="mt-5 mb-3 text-muted">© {{ params['blog_name'] }} 2024</p>
+</body>
+
+</html>
